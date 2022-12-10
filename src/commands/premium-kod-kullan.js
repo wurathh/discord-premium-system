@@ -13,6 +13,17 @@ data: new SlashCommandBuilder()
 run: async (client, interaction) => {
 
 const code = interaction.options.getString('kod');
+const x = db.fetch(`premium_code_${code}`);
+  if(!x) {
+    interaction.reply({embeds: [
+new EmbedBuilder()
+.setColor("Green")
+.setDescription("Premium Kodunuz Hatalı, Tekrar Deneyin!")
+]
+}).then(() =>
+setTimeout(() => interaction.deleteReply(), 30000)
+        })
+    
 
 try{
 db.set(`premium_${interaction.user.id}`, true)
